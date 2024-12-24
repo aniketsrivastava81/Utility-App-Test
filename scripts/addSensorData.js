@@ -1,9 +1,12 @@
 //addSensorData.js
 
-const { ethers, network } = require("hardhat");
+//const { ethers, network } = require("hardhat");
+
+import hardhat from "hardhat";
+const { ethers, network } = hardhat;
 
 // Contract ABI and Address
-const contractAddress = '0xc7078770ACFa5fC020b3469D672a530057B8a0b3'; // Replace with your contract's address
+const contractAddress = '0xEd701c2Ff586857b1A5D8C024b67309fA40C1490'; // Replace with your contract's address
 const contractABI = [
     {
         "inputs": [

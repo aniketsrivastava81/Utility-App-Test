@@ -20,9 +20,10 @@ const SensorDashboard = () => {
   });
 
   const [activeCard, setActiveCard] = useState(null); // Tracks which card is active (to show only one at a time)
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null); // Tracks the selected row index for radio button
 
   // Replace with your actual contract address and ABI
-  const contractAddress = "0x9B1095149c917C488328A9D5306Bf66b783c87ea";
+  const contractAddress = "0xEd701c2Ff586857b1A5D8C024b67309fA40C1490";
   const contractABI = [
     {
       "anonymous": false,
@@ -209,6 +210,30 @@ const SensorDashboard = () => {
     });
   };
 
+  const handlePopulateClick = () => {
+    if (selectedRowIndex !== null) {
+      const selectedSensor = sensorData[selectedRowIndex];
+      
+      // Update card data with the selected row's values
+      setCardData({
+        temperature: selectedSensor.temperature,
+        humidity: selectedSensor.humidity,
+        waterLevel: selectedSensor.waterLevel,
+        fireAlert: selectedSensor.fireAlert,
+        smokeAlert: selectedSensor.smokeAlert,
+      });
+
+      // Update card colors with the selected row's values
+      setCardColors({
+        temperature: parseFloat(selectedSensor.temperature) < 75 || parseFloat(selectedSensor.temperature) > 105 ? 'red' : 'green',
+        humidity: parseFloat(selectedSensor.humidity) > 80 ? 'green' : 'red',
+        waterLevel: selectedSensor.waterLevel === 'High' ? 'green' : selectedSensor.waterLevel === 'OK' ? 'yellow' : 'red',
+        fireAlert: selectedSensor.fireAlert === 'YES' ? 'red' : 'green',
+        smokeAlert: selectedSensor.smokeAlert === 'YES' ? 'red' : 'green',
+      });
+    }
+  };
+
   const clearFields = () => {
     setCardData({
       temperature: 'Loading...',
@@ -226,6 +251,11 @@ const SensorDashboard = () => {
     });
     setSensorData([]);
     setActiveCard(null);
+    setSelectedRowIndex(null);
+  };
+
+  const handleRowSelection = (index) => {
+    setSelectedRowIndex(index);
   };
 
   const handleCardClick = (cardType) => {
@@ -333,6 +363,7 @@ const SensorDashboard = () => {
             <th>Water Level</th>
             <th>Fire Alert</th>
             <th>Smoke Alert</th>
+            <th>Select</th>
           </tr>
         </thead>
         <tbody>
@@ -343,19 +374,28 @@ const SensorDashboard = () => {
               <td>{sensor.waterLevel}</td>
               <td>{sensor.fireAlert}</td>
               <td>{sensor.smokeAlert}</td>
+              <td>
+                <input
+                  type="radio"
+                  name="sensorSelection"
+                  onChange={() => handleRowSelection(index)}
+                  checked={selectedRowIndex === index}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
       <div className="button-container">
-        <button onClick={fetchSensorData}>Retrieve Sensor Data</button>
-        <button onClick={clearFields}>Clear Screen</button>
-        <button onClick={() => handleCardClick('temperature')}>Temperature</button>
-        <button onClick={() => handleCardClick('humidity')}>Humidity</button>
-        <button onClick={() => handleCardClick('waterLevel')}>Water Level</button>
-        <button onClick={() => handleCardClick('fireAlert')}>Fire Alert</button>
-        <button onClick={() => handleCardClick('smokeAlert')}>Smoke Alert</button>
+        <button onClick={fetchSensorData} className="btn btn-background-circle">Retrieve Sensor Data</button>
+        <button onClick={clearFields} className="btn btn-background-circle">Clear Screen</button>
+        <button onClick={() => handleCardClick('temperature')} className="btn btn-background-slide">Temperature</button>
+        <button onClick={() => handleCardClick('humidity')} className="btn btn-background-slide">Humidity</button>
+        <button onClick={() => handleCardClick('waterLevel')} className="btn btn-background-slide">Water Level</button>
+        <button onClick={() => handleCardClick('fireAlert')} className="btn btn-background-slide">Fire Alert</button>
+        <button onClick={() => handleCardClick('smokeAlert')} className="btn btn-background-slide">Smoke Alert</button>
+        <button onClick={handlePopulateClick} className="btn btn-background-slide">Populate</button>
       </div>
     </div>
   );

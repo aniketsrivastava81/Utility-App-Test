@@ -1,4 +1,8 @@
-const { ethers } = require("hardhat");
+//const { ethers } = require("hardhat");
+
+import hardhat from "hardhat";
+const { ethers } = hardhat;
+
 
 async function main() {
     // Get the deployer's signer (useful for interacting with the contract)
@@ -6,7 +10,7 @@ async function main() {
     console.log("Using account:", deployer.address);
 
     // Replace with the actual deployed contract address
-    const contractAddress = "0xc7078770ACFa5fC020b3469D672a530057B8a0b3";
+    const contractAddress = "0xEd701c2Ff586857b1A5D8C024b67309fA40C1490";
 
     // Get the contract ABI
     const contractABI = [

@@ -1,9 +1,8 @@
-testing utility monitoring system web3 - Hardhat/React/HTML/CSS/JS
-Steps to run project:
-1) run npm install
-2) start ganache
-3) run depoly.js
-npm hardhat run scripts/deploy.js --network -ganache
-4) copy deployed contract address into addData
-5) run addData.js like deploy
-6) run readData.js
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
